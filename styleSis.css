@@ -9,6 +9,7 @@ body{
     align-items: center;
     flex-direction: row;
     height: 90px;
+    flex-wrap: wrap;
 }
 
 .nav-links{
@@ -117,13 +118,24 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
-.text-primario{
+.func-dia{
+    max-width: 800px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.text-primaria h3{
     font-family: 'Inter', sans-serif;
     font-size: 15px;
     line-height: 1.6;
-    text-align: justify;
+    text-align: center;
     margin: 0; 
 }
 
@@ -140,6 +152,7 @@ body{
     padding: 80px 8%;
     text-align: center;
     font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
 }
 
 .cultos-header {
@@ -220,3 +233,90 @@ body{
     margin: 0;
 }
 
+/* ============================================
+   RESPONSIVIDADE
+   Estratégia: mobile-first ajustado por breakpoints,
+   do maior (desktop) para o menor (celular).
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .cultos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .inicio-conteudo h2 {
+        font-size: 34px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-bar{
+        flex-direction: column;
+        height: auto;
+        padding: 16px 0;
+        gap: 10px;
+    }
+
+    .nav-links{
+        width: 90%;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .cont-inicio{
+        min-height: 480px;
+    }
+
+    .inicio-conteudo{
+        max-width: 100%;
+        padding: 0 6%;
+    }
+
+    .inicio-conteudo h2{
+        font-size: 28px;
+    }
+
+    .inicio-texto{
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .func{
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .cultos-section{
+        padding: 60px 6%;
+    }
+
+    .cultos-header .cultos-titulo{
+        font-size: 26px;
+    }
+
+    .cultos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links{
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .inicio-conteudo h2{
+        font-size: 24px;
+    }
+
+    .btn-primario{
+        width: 100%;
+        text-align: center;
+        padding: 14px 0;
+    }
+
+    .culto-card{
+        padding: 18px;
+    }
+}
