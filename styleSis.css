@@ -147,7 +147,7 @@ body{
 
 }
 
-.cultos-section {
+.cultos-section, .eventos-section {
     background-color: #faf7f0;
     padding: 80px 8%;
     text-align: center;
@@ -155,7 +155,7 @@ body{
     box-sizing: border-box;
 }
 
-.cultos-header {
+.cultos-header, .eventos-header {
     max-width: 600px;
     margin: 0 auto 50px auto;
 }
@@ -191,7 +191,7 @@ body{
     margin: 0 auto;
 }
 
-.culto-card {
+.culto-card, .evento-card {
     background: #fff;
     border-radius: 12px;
     padding: 24px;
@@ -199,7 +199,7 @@ body{
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-.culto-card-topo {
+.culto-card-topo, .evento-card-topo {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -233,90 +233,54 @@ body{
     margin: 0;
 }
 
-/* ============================================
-   RESPONSIVIDADE
-   Estratégia: mobile-first ajustado por breakpoints,
-   do maior (desktop) para o menor (celular).
-   ============================================ */
-
-@media (max-width: 1024px) {
-    .cultos-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .inicio-conteudo h2 {
-        font-size: 34px;
-    }
+.eventos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.eventos-header {
+    max-width: 1200px;
+    margin: 0 auto 50px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    gap: 20px;
+    flex-wrap: wrap; 
 }
 
-@media (max-width: 768px) {
-    .nav-bar{
-        flex-direction: column;
-        height: auto;
-        padding: 16px 0;
-        gap: 10px;
-    }
-
-    .nav-links{
-        width: 90%;
-        flex-wrap: wrap;
-        gap: 12px;
-    }
-
-    .cont-inicio{
-        min-height: 480px;
-    }
-
-    .inicio-conteudo{
-        max-width: 100%;
-        padding: 0 6%;
-    }
-
-    .inicio-conteudo h2{
-        font-size: 28px;
-    }
-
-    .inicio-texto{
-        text-align: left;
-        font-size: 14px;
-    }
-
-    .func{
-        height: auto;
-        padding: 40px 20px;
-    }
-
-    .cultos-section{
-        padding: 60px 6%;
-    }
-
-    .cultos-header .cultos-titulo{
-        font-size: 26px;
-    }
-
-    .cultos-grid {
-        grid-template-columns: 1fr;
-    }
+.eventos-header h5 {
+    color: #e0a030;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
 }
 
-@media (max-width: 480px) {
-    .nav-links{
-        justify-content: flex-start;
-        flex-direction: column;
-        gap: 8px;
-    }
+.eventos-header h2 {
+    color: #14213d;
+    font-size: 30px;
+    font-weight: 800;
+    margin: 0;
+}
 
-    .inicio-conteudo h2{
-        font-size: 24px;
-    }
+.btn-secundario {
+    background: transparent;
+    border: 1px solid #14213d;
+    color: #14213d;
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap; 
+}
 
-    .btn-primario{
-        width: 100%;
-        text-align: center;
-        padding: 14px 0;
-    }
-
-    .culto-card{
-        padding: 18px;
-    }
+.btn-secundario:hover {
+    background: #14213d;
+    color: #fff;
 }
