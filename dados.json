@@ -1,0 +1,63 @@
+{
+  "cultos": [
+    {
+      "id": "culto-1",
+      "horario": "09:00",
+      "titulo": "Culto de Domingo Manhã",
+      "descricao": "Uma manhã especial de comunhão, louvor congregacional e estudo focado na palavra de Deus para iniciar a semana."
+    },
+    {
+      "id": "culto-2",
+      "horario": "18:00",
+      "titulo": "Culto de Domingo Noite",
+      "descricao": "Celebração principal com adoração vibrante, ministração da Palavra e oração em família. Ideal para toda a parentela."
+    },
+    {
+      "id": "culto-3",
+      "horario": "19:30",
+      "titulo": "Culto de Quarta-feira",
+      "descricao": "Reunião de oração e doutrina. Um momento precioso no meio da semana para fortalecer a caminhada espiritual e buscar milagres."
+    },
+    {
+      "id": "culto-4",
+      "horario": "08:00",
+      "titulo": "Escola Bíblica Dominical",
+      "descricao": "Estudo sistemático da Bíblia dividido por classes e faixas etárias. O alicerce teológico para a edificação do lar."
+    }
+  ],
+  "comunicados": [
+    {
+      "id": "com-1",
+      "data": "05 NOV. 2026",
+      "titulo": "Nova Campanha de Jejum e Oração",
+      "texto": "Iniciaremos na próxima segunda-feira uma consagração de 21 dias focada no avivamento das famílias e missões urbanas. Participe conosco.",
+      "imagem": "imagens/jejum-oracao.jpg",
+      "destaque": true
+    },
+    {
+      "id": "com-3",
+      "data": "28 OUT. 2026",
+      "titulo": "Ação Social: Doação de Alimentos neste Sábado",
+      "texto": "Nosso ministério de assistência estará arrecadando cestas básicas na quadra da igreja. Junte-se a nós para abençoar a comunidade local.",
+      "imagem": "imagens/acao-social.jpg",
+      "destaque": true
+    },
+    {
+      "id": "com-4",
+      "data": "20 OUT. 2026",
+      "titulo": "Batismo nas Águas: Inscrições Abertas",
+      "texto": "As inscrições para a próxima turma de batismo seguem abertas na secretaria até o fim do mês. Fale com um dos diáconos.",
+      "imagem": "imagens/batismo.jpg",
+      "destaque": false
+    },
+    {
+      "id": "com-5",
+      "data": "12 OUT. 2026",
+      "titulo": "Ensaio Geral do Coral de Natal",
+      "texto": "O coral iniciará os ensaios do repertório natalino todas as quintas, às 20h, no templo sede. Novos integrantes são bem-vindos.",
+      "imagem": "imagens/coral.jpg",
+      "destaque": false
+    }
+  ],
+  "eventos": []
+}

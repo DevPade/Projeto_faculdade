@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo — AD Novo Tempo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <header class="admin-topo">
+        <h1>Painel Administrativo — AD Novo Tempo</h1>
+        <div class="admin-topo-botoes">
+            <a class="btn btn-linha" href="index.html" target="_blank">Ver o site</a>
+            <button class="btn btn-linha" onclick="descartarAlteracoes()">Descartar alterações</button>
+            <button class="btn btn-escuro" onclick="baixarDados()">Baixar dados.json</button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="aviso">
+            <strong>Como publicar:</strong> as alterações ficam salvas no seu navegador enquanto você edita.
+            Para que os visitantes vejam, clique em <strong>Baixar dados.json</strong> e substitua o arquivo
+            <code>dados.json</code> no servidor do site.
+        </div>
+
+        <div class="abas">
+            <button class="aba aba-ativa" data-aba="cultos" onclick="trocarAba('cultos')">Cultos</button>
+            <button class="aba" data-aba="comunicados" onclick="trocarAba('comunicados')">Comunicados</button>
+        </div>
+
+        <!-- cultos -->
+        <section class="painel painel-ativo" id="painel-cultos">
+            <div class="form-card">
+                <h3 id="titulo-form-culto">Novo culto</h3>
+                <form id="form-culto" onsubmit="salvarCulto(event)">
+                    <div class="linha">
+                        <div class="campo">
+                            <label for="culto-horario">Horário</label>
+                            <input type="text" id="culto-horario" placeholder="09:00" required>
+                        </div>
+                        <div class="campo">
+                            <label for="culto-titulo">Título</label>
+                            <input type="text" id="culto-titulo" placeholder="Culto de Domingo Manhã" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="culto-descricao">Descrição</label>
+                        <textarea id="culto-descricao" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-escuro">Salvar culto</button>
+                    <button type="button" class="btn btn-linha" id="cancelar-culto" onclick="limparFormularioCulto()" hidden>Cancelar edição</button>
+                </form>
+            </div>
+            <div id="lista-cultos"></div>
+        </section>
+
+        <!-- comunicados -->
+        <section class="painel" id="painel-comunicados">
+            <div class="form-card">
+                <h3 id="titulo-form-comunicado">Novo comunicado</h3>
+                <form id="form-comunicado" onsubmit="salvarComunicado(event)">
+                    <div class="linha">
+                        <div class="campo">
+                            <label for="com-data">Data exibida</label>
+                            <input type="text" id="com-data" placeholder="05 NOV. 2026" required>
+                        </div>
+                        <div class="campo">
+                            <label for="com-imagem">Caminho da imagem</label>
+                            <input type="text" id="com-imagem" placeholder="imagens/jejum-oracao.jpg" required>
+                            <small>Suba a foto na pasta <code>imagens/</code> do site.</small>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="com-titulo">Título</label>
+                        <input type="text" id="com-titulo" required>
+                    </div>
+                    <div class="campo">
+                        <label for="com-texto">Texto</label>
+                        <textarea id="com-texto" rows="3" required></textarea>
+                    </div>
+                    <div class="campo campo-check">
+                        <input type="checkbox" id="com-destaque" checked>
+                        <label for="com-destaque">Mostrar já na página inicial (sem precisar clicar em "Ver Todos")</label>
+                    </div>
+                    <button type="submit" class="btn btn-escuro">Salvar comunicado</button>
+                    <button type="button" class="btn btn-linha" id="cancelar-comunicado" onclick="limparFormularioComunicado()" hidden>Cancelar edição</button>
+                </form>
+            </div>
+            <div id="lista-comunicados"></div>
+        </section>
+
+    </div>
+
+    <div class="aviso-canto" id="aviso-canto"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

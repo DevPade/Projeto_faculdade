@@ -1,88 +1,145 @@
-
-/* ============================================
-   RESPONSIVIDADE
-   Estratégia: mobile-first ajustado por breakpoints,
-   do maior (desktop) para o menor (celular).
-   ============================================ */
-
+/* ===================================
+   TABLET (até 1024px)
+=================================== */
 @media (max-width: 1024px) {
     .cultos-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .inicio-conteudo h2 {
-        font-size: 34px;
+    .eventos-grid,
+    .agenda-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 768px) {
-    .nav-bar{
+/* ===================================
+   MOBILE / TABLET PEQUENO (até 900px)
+=================================== */
+@media (max-width: 900px) {
+    /* navbar vira: linha (logo + hambúrguer) + menu dropdown abaixo */
+    .nav-bar {
         flex-direction: column;
         height: auto;
-        padding: 16px 0;
-        gap: 10px;
+        padding: 16px 8%;
+        gap: 0;
+        align-items: stretch;
     }
 
-    .nav-links{
-        width: 90%;
-        flex-wrap: wrap;
-        gap: 12px;
+    .nav-bar-topo {
+        width: 100%;
+        justify-content: space-between;
     }
 
-    .cont-inicio{
-        min-height: 480px;
+    .nav-toggle {
+        display: block;
     }
 
-    .inicio-conteudo{
+    .nav-links {
+        display: none; /* escondido até o JS adicionar .nav-links--aberta */
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        margin-top: 12px;
+    }
+
+    .nav-links--aberta {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--cor-borda);
+    }
+
+    .nav-links a:hover {
+        transform: none;
+    }
+
+    /* banner inicial com texto menor */
+    .inicio-titulo {
+        font-size: 30px;
+    }
+
+    .inicio-conteudo {
         max-width: 100%;
-        padding: 0 6%;
     }
 
-    .inicio-conteudo h2{
-        font-size: 28px;
+    /* bíblia: card do versículo desce pra baixo da busca */
+    .biblia-grid {
+        grid-template-columns: 1fr;
     }
 
-    .inicio-texto{
-        text-align: left;
-        font-size: 14px;
+    .versiculo-card {
+        max-width: 100%;
     }
 
-    .func{
-        height: auto;
-        padding: 40px 20px;
+    /* liderança: foto em cima, texto embaixo */
+    .lideranca-card {
+        grid-template-columns: 1fr;
     }
 
-    .cultos-section{
-        padding: 60px 6%;
+    .lideranca-imagem img {
+        height: 260px;
     }
 
-    .cultos-header .cultos-titulo{
+    /* contato: form desce pra baixo do endereço/mapa */
+    .contato-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* rodapé: colunas empilhadas */
+    .rodape-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .rodape-base {
+        flex-direction: column;
+    }
+}
+
+/* ===================================
+   MOBILE (até 640px)
+=================================== */
+@media (max-width: 640px) {
+    .cultos-grid,
+    .eventos-grid,
+    .agenda-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .eventos-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .eventos-header .btn-secundario {
+        width: 100%;
+    }
+
+    .titulo-secao {
         font-size: 26px;
     }
 
-    .cultos-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-links{
-        justify-content: flex-start;
-        flex-direction: column;
-        gap: 8px;
+    .inicio-titulo {
+        font-size: 26px;
     }
 
-    .inicio-conteudo h2{
-        font-size: 24px;
+    .biblia-busca {
+        flex-wrap: wrap;
+        padding: 12px 16px;
     }
 
-    .btn-primario{
+    .biblia-busca input {
         width: 100%;
-        text-align: center;
-        padding: 14px 0;
+        order: 1;
     }
 
-    .culto-card{
-        padding: 18px;
+    .biblia-busca .btn-escuro {
+        width: 100%;
+        order: 2;
+        margin-top: 8px;
     }
 }
