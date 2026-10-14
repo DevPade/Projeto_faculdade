@@ -258,7 +258,7 @@ function animarCards() {
         }
     });
 
-    const cards = document.querySelectorAll('.culto-card, .evento-card, .versiculo-card, .lideranca-card, .contato-form');
+    const cards = document.querySelectorAll('.culto-card, .evento-card, .versiculo-card, .contato-form');
     for (const card of cards) {
         card.classList.add('animar');
         observador.observe(card);
@@ -308,7 +308,7 @@ function mostrarAnoRodape() {
 // ============================================================
 
 // Confere os campos e, se estiver tudo certo, envia a mensagem para o Formspree
-// (que encaminha para o e-mail do pastor).
+// (que encaminha para o e-mail da igreja).
 async function enviarContato(evento) {
     evento.preventDefault();  // impede a página de recarregar
 
@@ -370,83 +370,118 @@ async function enviarContato(evento) {
 
 // ============================================================
 // 5. BUSCA DA BÍBLIA
-// A pessoa digita "João 3:16". Nós trocamos o nome do livro pelo nome em inglês
-// ("john 3:16") porque é assim que o site bible-api.com entende, e pedimos o texto
-// em português (tradução Almeida). Essa API só busca por referência, não por palavra.
+// A pessoa digita "João 3:16". Nós descobrimos o código do livro ("JHN") e pedimos o
+// capítulo inteiro ao site bible-api.com (tradução Almeida, em português). Depois
+// ficamos só com os versículos pedidos. Essa API só busca por referência, não por palavra.
 // ============================================================
 
-// [nome em português, nome que a API entende]
+// [nome em português, código do livro na API]
 const livros = [
-    ['Gênesis', 'genesis'], ['Êxodo', 'exodus'], ['Levítico', 'leviticus'], ['Números', 'numbers'],
-    ['Deuteronômio', 'deuteronomy'], ['Josué', 'joshua'], ['Juízes', 'judges'], ['Rute', 'ruth'],
-    ['1 Samuel', '1 samuel'], ['2 Samuel', '2 samuel'], ['1 Reis', '1 kings'], ['2 Reis', '2 kings'],
-    ['1 Crônicas', '1 chronicles'], ['2 Crônicas', '2 chronicles'], ['Esdras', 'ezra'], ['Neemias', 'nehemiah'],
-    ['Ester', 'esther'], ['Jó', 'job'], ['Salmos', 'psalms'], ['Salmo', 'psalms'], ['Provérbios', 'proverbs'],
-    ['Eclesiastes', 'ecclesiastes'], ['Cantares', 'song of solomon'], ['Cânticos', 'song of solomon'],
-    ['Isaías', 'isaiah'], ['Jeremias', 'jeremiah'], ['Lamentações', 'lamentations'], ['Ezequiel', 'ezekiel'],
-    ['Daniel', 'daniel'], ['Oséias', 'hosea'], ['Joel', 'joel'], ['Amós', 'amos'], ['Obadias', 'obadiah'],
-    ['Jonas', 'jonah'], ['Miquéias', 'micah'], ['Naum', 'nahum'], ['Habacuque', 'habakkuk'],
-    ['Sofonias', 'zephaniah'], ['Ageu', 'haggai'], ['Zacarias', 'zechariah'], ['Malaquias', 'malachi'],
-    ['Mateus', 'matthew'], ['Marcos', 'mark'], ['Lucas', 'luke'], ['João', 'john'], ['Atos', 'acts'],
-    ['Romanos', 'romans'], ['1 Coríntios', '1 corinthians'], ['2 Coríntios', '2 corinthians'],
-    ['Gálatas', 'galatians'], ['Efésios', 'ephesians'], ['Filipenses', 'philippians'],
-    ['Colossenses', 'colossians'], ['1 Tessalonicenses', '1 thessalonians'], ['2 Tessalonicenses', '2 thessalonians'],
-    ['1 Timóteo', '1 timothy'], ['2 Timóteo', '2 timothy'], ['Tito', 'titus'], ['Filemom', 'philemon'],
-    ['Hebreus', 'hebrews'], ['Tiago', 'james'], ['1 Pedro', '1 peter'], ['2 Pedro', '2 peter'],
-    ['1 João', '1 john'], ['2 João', '2 john'], ['3 João', '3 john'], ['Judas', 'jude'], ['Apocalipse', 'revelation'],
+    ['Gênesis', 'GEN'], ['Êxodo', 'EXO'], ['Levítico', 'LEV'], ['Números', 'NUM'],
+    ['Deuteronômio', 'DEU'], ['Josué', 'JOS'], ['Juízes', 'JDG'], ['Rute', 'RUT'],
+    ['1 Samuel', '1SA'], ['2 Samuel', '2SA'], ['1 Reis', '1KI'], ['2 Reis', '2KI'],
+    ['1 Crônicas', '1CH'], ['2 Crônicas', '2CH'], ['Esdras', 'EZR'], ['Neemias', 'NEH'],
+    ['Ester', 'EST'], ['Jó', 'JOB'], ['Salmos', 'PSA'], ['Salmo', 'PSA'], ['Provérbios', 'PRO'],
+    ['Eclesiastes', 'ECC'], ['Cânticos', 'SNG'], ['Cantares', 'SNG'], ['Isaías', 'ISA'],
+    ['Jeremias', 'JER'], ['Lamentações', 'LAM'], ['Ezequiel', 'EZK'], ['Daniel', 'DAN'],
+    ['Oséias', 'HOS'], ['Joel', 'JOL'], ['Amós', 'AMO'], ['Obadias', 'OBA'], ['Jonas', 'JON'],
+    ['Miquéias', 'MIC'], ['Naum', 'NAM'], ['Habacuque', 'HAB'], ['Sofonias', 'ZEP'],
+    ['Ageu', 'HAG'], ['Zacarias', 'ZEC'], ['Malaquias', 'MAL'], ['Mateus', 'MAT'],
+    ['Marcos', 'MRK'], ['Lucas', 'LUK'], ['João', 'JHN'], ['Atos', 'ACT'], ['Romanos', 'ROM'],
+    ['1 Coríntios', '1CO'], ['2 Coríntios', '2CO'], ['Gálatas', 'GAL'], ['Efésios', 'EPH'],
+    ['Filipenses', 'PHP'], ['Colossenses', 'COL'], ['1 Tessalonicenses', '1TH'],
+    ['2 Tessalonicenses', '2TH'], ['1 Timóteo', '1TI'], ['2 Timóteo', '2TI'], ['Tito', 'TIT'],
+    ['Filemom', 'PHM'], ['Hebreus', 'HEB'], ['Tiago', 'JAS'], ['1 Pedro', '1PE'], ['2 Pedro', '2PE'],
+    ['1 João', '1JN'], ['2 João', '2JN'], ['3 João', '3JN'], ['Judas', 'JUD'], ['Apocalipse', 'REV'],
 ];
 
 // Palavras soltas que a pessoa pode digitar. Cada uma leva a um versículo escolhido por nós.
-// [como mostrar, como a API entende]
 const temas = {
-    fe: ['Hebreus 11:1', 'hebrews 11:1'],
-    amor: ['1 Coríntios 13:4-7', '1 corinthians 13:4-7'],
-    esperanca: ['Romanos 15:13', 'romans 15:13'],
-    paz: ['Filipenses 4:6-7', 'philippians 4:6-7'],
-    forca: ['Isaías 41:10', 'isaiah 41:10'],
-    perdao: ['Colossenses 3:13', 'colossians 3:13'],
-    cura: ['Jeremias 17:14', 'jeremiah 17:14'],
+    fe: 'Hebreus 11:1',
+    amor: '1 Coríntios 13:4-7',
+    esperanca: 'Romanos 15:13',
+    paz: 'Filipenses 4:6-7',
+    forca: 'Isaías 41:10',
+    perdao: 'Colossenses 3:13',
+    cura: 'Jeremias 17:14',
 };
+
+// Quantos versículos mostrar quando a pessoa pede um capítulo inteiro.
+const maximoDeVersiculos = 8;
 
 // Tira os acentos: "João" vira "Joao". Assim "joao", "João" e "JOÃO" são a mesma coisa.
 function tirarAcentos(texto) {
     return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
-// Transforma o que a pessoa digitou em duas versões: a que mostramos e a que a API entende.
-// Devolve null se não entender o que foi digitado.
+// Entende o que a pessoa digitou ("João 3:16") e separa em pedaços:
+//   { nome: 'João', codigo: 'JHN', capitulo: 3, primeiro: 16, ultimo: 16 }
+// "primeiro" e "ultimo" valem 0 quando a pessoa pediu o capítulo inteiro.
+// Devolve null se não entender.
 function montarReferencia(digitado) {
-    const texto = tirarAcentos(digitado.toLowerCase()).trim().replace(/\s+/g, ' ');
+    let texto = tirarAcentos(digitado.toLowerCase()).trim().replace(/\s+/g, ' ');
 
-    // 1) é uma palavra solta, como "fé" ou "paz"?
+    // palavra solta ("fé", "paz"...)? troca pelo versículo escolhido para ela
     if (temas.hasOwnProperty(texto)) {
-        return { exibir: temas[texto][0], api: temas[texto][1] };
+        texto = tirarAcentos(temas[texto].toLowerCase());
     }
 
-    // 2) é "livro + números"? O último pedaço são os números ("3:16"), o resto é o livro.
+    // o último pedaço são os números ("91:1-2"); o resto é o nome do livro
     const partes = texto.split(' ');
     const numeros = partes.pop();          // pop() tira o último pedaço da lista e devolve ele
     const nomeDoLivro = partes.join(' ');
 
-    if (isNaN(parseInt(numeros))) {
-        return null;                       // o último pedaço não começa com número
+    // "91:1-2" vira capítulo "91" e versículos "1-2"
+    const capituloEVersiculos = numeros.split(':');
+    const capitulo = parseInt(capituloEVersiculos[0]);
+    let primeiro = 0;
+    let ultimo = 0;
+
+    if (isNaN(capitulo) || capitulo < 1) {
+        return null;
+    }
+
+    if (capituloEVersiculos.length > 1) {
+        const intervalo = capituloEVersiculos[1].split('-');   // "1-2" vira ["1", "2"]
+        primeiro = parseInt(intervalo[0]);
+        ultimo = intervalo.length > 1 ? parseInt(intervalo[1]) : primeiro;
+
+        if (isNaN(primeiro) || isNaN(ultimo)) {
+            return null;
+        }
     }
 
     for (const livro of livros) {
         if (tirarAcentos(livro[0].toLowerCase()) === nomeDoLivro) {
-            return { exibir: livro[0] + ' ' + numeros, api: livro[1] + ' ' + numeros };
+            return { nome: livro[0], codigo: livro[1], capitulo: capitulo, primeiro: primeiro, ultimo: ultimo };
         }
     }
 
     return null;  // não achou o livro
 }
 
-// Busca o versículo na API e coloca no card.
-async function buscarVersiculo(evento) {
-    evento.preventDefault();
+// Acha o parágrafo de avisos embaixo da busca. Se não existir no HTML, cria.
+function pegarAvisoDaBusca(formulario) {
+    let aviso = document.getElementById('busca-aviso');
 
-    const aviso = document.getElementById('busca-aviso');
-    const referencia = montarReferencia(document.getElementById('busca-biblia').value);
+    if (aviso === null) {
+        aviso = document.createElement('p');
+        aviso.id = 'busca-aviso';
+        aviso.className = 'biblia-aviso';
+        formulario.insertAdjacentElement('afterend', aviso);
+    }
+
+    return aviso;
+}
+
+// Clique em "Buscar": pede o capítulo à API e coloca o resultado no card.
+async function buscarVersiculo(evento) {
+    evento.preventDefault();  // impede a página de recarregar
+
+    const formulario = evento.currentTarget;  // o formulário que foi enviado
+    const campo = formulario.querySelector('input');
+    const aviso = pegarAvisoDaBusca(formulario);
+    const referencia = montarReferencia(campo.value);
 
     if (referencia === null) {
         aviso.textContent = 'Não entendi. Tente "Salmos 23", "João 3:16" ou uma palavra como fé, amor ou paz.';
@@ -456,73 +491,68 @@ async function buscarVersiculo(evento) {
     aviso.textContent = 'Buscando...';
 
     try {
-        const endereco = 'https://bible-api.com/' + encodeURIComponent(referencia.api) + '?translation=almeida';
+        const endereco = 'https://bible-api.com/data/almeida/' + referencia.codigo + '/' + referencia.capitulo;
         const resposta = await fetch(endereco);
-        const resultado = await resposta.json();
 
-        if (resultado.error) {
-            aviso.textContent = 'Não encontramos esse versículo. Confira o capítulo e o número.';
+        if (resposta.status === 429) {
+            aviso.textContent = 'Muitas buscas seguidas. Espere alguns segundos e tente de novo.';
+            return;
+        }
+        if (!resposta.ok) {
+            aviso.textContent = 'Não encontramos esse capítulo. Confira o número.';
             return;
         }
 
-        document.querySelector('.versiculo-referencia').textContent = referencia.exibir;
-        document.querySelector('.versiculo-texto').textContent = '"' + resultado.text.trim().replace(/\s+/g, ' ') + '"';
-        aviso.textContent = '';
-        marcarSalvo();
-    } catch (erro) {
-        aviso.textContent = 'Não foi possível buscar agora. Verifique sua internet e tente de novo.';
-    }
-}
+        const resultado = await resposta.json();
+        let versiculos = resultado.verses || [];
 
-// Lê a lista de versículos salvos (fica guardada no navegador da pessoa).
-function lerSalvos() {
-    return JSON.parse(localStorage.getItem('versiculos-salvos')) || [];
-}
+        // pediu versículos específicos ("3:16" ou "1-2")? fica só com eles
+        if (referencia.primeiro > 0) {
+            versiculos = versiculos.filter(function (versiculo) {
+                return versiculo.verse >= referencia.primeiro && versiculo.verse <= referencia.ultimo;
+            });
+        }
 
-// Pinta o marcador de dourado se o versículo que está no card já foi salvo.
-function marcarSalvo() {
-    const referencia = document.querySelector('.versiculo-referencia');
-    const marcador = document.querySelector('.versiculo-salvar');
-    if (referencia === null || marcador === null) {
-        return;  // o card do versículo não existe no HTML
-    }
+        if (versiculos.length === 0) {
+            aviso.textContent = 'Não encontramos esse versículo. Confira o número.';
+            return;
+        }
 
-    marcador.classList.toggle('versiculo-salvo', lerSalvos().includes(referencia.textContent));
-}
+        // capítulo inteiro e muito grande: mostra só o começo
+        let cortado = false;
+        if (referencia.primeiro === 0 && versiculos.length > maximoDeVersiculos) {
+            versiculos = versiculos.slice(0, maximoDeVersiculos);  // pega só os primeiros
+            cortado = true;
+        }
 
-// Clique no marcador: salva o versículo, ou tira se já estava salvo.
-function salvarVersiculo() {
-    const referencia = document.querySelector('.versiculo-referencia').textContent;
-    let salvos = lerSalvos();
+        // junta o texto de todos os versículos numa frase só
+        let texto = '';
+        for (const versiculo of versiculos) {
+            texto += versiculo.text.trim().replace(/\s+/g, ' ') + ' ';
+        }
 
-    if (salvos.includes(referencia)) {
-        salvos = salvos.filter(function (item) { return item !== referencia; });  // tira da lista
-    } else {
-        salvos.push(referencia);                                                   // põe na lista
-    }
+        // título do card: "Salmos 91:1-2" (ou só "Salmos 23" quando mostrou o capítulo todo)
+        let titulo = referencia.nome + ' ' + referencia.capitulo;
+        const primeiroMostrado = versiculos[0].verse;
+        const ultimoMostrado = versiculos[versiculos.length - 1].verse;
 
-    localStorage.setItem('versiculos-salvos', JSON.stringify(salvos));
-    marcarSalvo();
-}
+        if (referencia.primeiro > 0 || cortado) {
+            titulo += ':' + primeiroMostrado;
+            if (ultimoMostrado > primeiroMostrado) {
+                titulo += '-' + ultimoMostrado;
+            }
+        }
 
-// Clique em "Compartilhar": no celular abre o menu de compartilhar; no computador copia o texto.
-async function compartilharVersiculo() {
-    const botao = document.querySelector('.versiculo-compartilhar');
-    const referencia = document.querySelector('.versiculo-referencia').textContent;
-    const texto = document.querySelector('.versiculo-texto').textContent.trim();
-    const mensagem = referencia + '\n' + texto;
+        document.querySelector('.versiculo-referencia').textContent = titulo;
+        document.querySelector('.versiculo-texto').textContent = '"' + texto.trim() + '"';
 
-    try {
-        if (navigator.share) {
-            await navigator.share({ text: mensagem });
+        if (cortado) {
+            aviso.textContent = 'Capítulo grande: mostrando só os ' + maximoDeVersiculos + ' primeiros versículos. Para um trecho, digite por exemplo ' + referencia.nome + ' ' + referencia.capitulo + ':10-12.';
         } else {
-            await navigator.clipboard.writeText(mensagem);
-            const conteudoOriginal = botao.innerHTML;
-            botao.textContent = 'Copiado!';
-            setTimeout(function () { botao.innerHTML = conteudoOriginal; }, 2000);
+            aviso.textContent = '';
         }
     } catch (erro) {
-        // a pessoa cancelou, ou o navegador não deixou. Não precisa fazer nada.
+        aviso.textContent = 'Não foi possível buscar agora. Verifique sua internet e tente de novo.';
     }
 }
 
@@ -544,9 +574,7 @@ ligar('.nav-toggle', 'click', abrirOuFecharMenu);
 ligar('.voltar-topo', 'click', voltarAoTopo);
 ligar('#btn-mais-comunicados', 'click', alternarComunicados);
 ligar('#form-contato', 'submit', enviarContato);
-ligar('#form-busca', 'submit', buscarVersiculo);
-ligar('.versiculo-salvar', 'click', salvarVersiculo);
-ligar('.versiculo-compartilhar', 'click', compartilharVersiculo);
+ligar('.biblia-busca', 'submit', buscarVersiculo);
 window.addEventListener('scroll', aoRolar);
 
 for (const link of document.querySelectorAll('.nav-links a')) {
@@ -555,7 +583,6 @@ for (const link of document.querySelectorAll('.nav-links a')) {
 
 executar(mostrarVersiculoDoDia);
 executar(mostrarAnoRodape);
-executar(marcarSalvo);
 executar(aoRolar);
-executar(animarCards);   // cards que já estão no HTML (liderança, versículo, formulário)
+executar(animarCards);   // cards que já estão no HTML (versículo, formulário)
 iniciarConteudo();       // cultos e comunicados (vêm do dados.json)

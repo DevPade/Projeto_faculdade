@@ -1,27 +1,22 @@
-/* ===================================
-   TABLET (até 1024px)
-=================================== */
+/* tablet (ate 1024px): 2 cards por linha */
+
 @media (max-width: 1024px) {
-    .cultos-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .culto-card {
+        width: calc((100% - 24px) / 2);
     }
 
-    .eventos-grid,
-    .agenda-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .evento-card {
+        width: calc((100% - 24px) / 2);
     }
 }
 
-/* ===================================
-   MOBILE / TABLET PEQUENO (até 900px)
-=================================== */
+/* tablet e celular (ate 900px) */
+
 @media (max-width: 900px) {
-    /* navbar vira: linha (logo + hambúrguer) + menu dropdown abaixo */
     .nav-bar {
         flex-direction: column;
         height: auto;
         padding: 16px 8%;
-        gap: 0;
         align-items: stretch;
     }
 
@@ -35,29 +30,27 @@
     }
 
     .nav-links {
-        display: none; /* escondido até o JS adicionar .nav-links--aberta */
+        display: none;
         width: 100%;
         flex-direction: column;
         align-items: flex-start;
-        gap: 0;
         margin-top: 12px;
     }
 
-    .nav-links--aberta {
+    .nav-links-aberto {
         display: flex;
     }
 
     .nav-links a {
         width: 100%;
         padding: 12px 0;
-        border-bottom: 1px solid var(--cor-borda);
+        border-bottom: 1px solid #e5e5e5;
     }
 
     .nav-links a:hover {
         transform: none;
     }
 
-    /* banner inicial com texto menor */
     .inicio-titulo {
         font-size: 30px;
     }
@@ -66,48 +59,20 @@
         max-width: 100%;
     }
 
-    /* bíblia: card do versículo desce pra baixo da busca */
-    .biblia-grid {
+    .biblia-grid, .contato-grid {
         grid-template-columns: 1fr;
     }
 
     .versiculo-card {
         max-width: 100%;
     }
-
-    /* liderança: foto em cima, texto embaixo */
-    .lideranca-card {
-        grid-template-columns: 1fr;
-    }
-
-    .lideranca-imagem img {
-        height: 260px;
-    }
-
-    /* contato: form desce pra baixo do endereço/mapa */
-    .contato-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* rodapé: colunas empilhadas */
-    .rodape-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-    }
-
-    .rodape-base {
-        flex-direction: column;
-    }
 }
 
-/* ===================================
-   MOBILE (até 640px)
-=================================== */
+/* celular (ate 640px) */
+
 @media (max-width: 640px) {
-    .cultos-grid,
-    .eventos-grid,
-    .agenda-grid {
-        grid-template-columns: 1fr;
+    .culto-card, .evento-card {
+        width: 100%;
     }
 
     .eventos-header {
@@ -119,7 +84,7 @@
         width: 100%;
     }
 
-    .titulo-secao {
+    .cultos-titulo, .eventos-titulo, .biblia-titulo, .contato-titulo {
         font-size: 26px;
     }
 

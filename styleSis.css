@@ -193,7 +193,7 @@ section[id] {
 
 /* partes que se repetem em varias secoes */
 
-.inicio-tag, .cultos-tag, .eventos-tag, .biblia-tag, .lideranca-tag, .contato-tag {
+.inicio-tag, .cultos-tag, .eventos-tag, .biblia-tag, .contato-tag {
     display: inline-block;
     color: #e0a030;
     font-size: 13px;
@@ -353,7 +353,7 @@ section[id] {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.evento-card-topo, .lideranca-imagem {
+.evento-card-topo {
     background: linear-gradient(135deg, #e8e4da, #f4efe6);
 }
 
@@ -462,29 +462,11 @@ section[id] {
     max-width: 380px;
 }
 
-.versiculo-card-topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
 .versiculo-referencia {
     color: #14213d;
     font-size: 16px;
     font-weight: 700;
     margin: 0;
-}
-
-.versiculo-salvar {
-    background: none;
-    border: none;
-    color: #6b7280;
-    cursor: pointer;
-    padding: 4px;
-}
-
-.versiculo-salvar:hover, .versiculo-salvo {
-    color: #e0a030;
 }
 
 .versiculo-texto {
@@ -493,89 +475,6 @@ section[id] {
     line-height: 1.7;
     font-style: italic;
     margin: 0;
-}
-
-.versiculo-compartilhar {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: none;
-    border: none;
-    color: #14213d;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0;
-    align-self: flex-start;
-}
-
-.versiculo-compartilhar:hover {
-    color: #e0a030;
-}
-
-/* lideranca */
-
-.lideranca-section {
-    background: #fff;
-    padding: 60px 8%;
-}
-
-.lideranca-card {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-}
-
-.lideranca-imagem {
-    height: 340px;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.lideranca-imagem img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.lideranca-titulo {
-    color: #14213d;
-    font-size: 26px;
-    font-weight: 800;
-    line-height: 1.3;
-    margin: 0 0 14px 0;
-}
-
-.lideranca-texto {
-    color: #6b7280;
-    font-size: 14.5px;
-    line-height: 1.7;
-    margin: 0 0 20px 0;
-}
-
-.lideranca-citacao {
-    border-left: 3px solid #e0a030;
-    padding-left: 16px;
-    margin: 0;
-    font-style: italic;
-    color: #14213d;
-    font-size: 14.5px;
-    line-height: 1.6;
-}
-
-.lideranca-citacao cite {
-    display: block;
-    margin-top: 10px;
-    font-style: normal;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: #6b7280;
 }
 
 /* contato */
@@ -720,112 +619,13 @@ section[id] {
 .rodape {
     background: #0B132B;
     color: #c9cdd8;
-    padding: 60px 8% 24px 8%;
+    padding: 28px 8%;
+    text-align: center;
 }
 
-.rodape-grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 40px;
-    padding-bottom: 40px;
-}
-
-.rodape-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-}
-
-.rodape-logo-icone {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #e0a030;
-}
-
-.rodape-logo span:last-child {
-    color: #fff;
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-}
-
-.rodape-marca p {
-    font-size: 13.5px;
-    line-height: 1.6;
-    margin: 0 0 18px 0;
-    max-width: 320px;
-}
-
-.rodape-social {
-    display: flex;
-    gap: 10px;
-}
-
-.rodape-social a {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.rodape-social a:hover {
-    background: #e0a030;
-    border-color: #e0a030;
-    color: #0B132B;
-}
-
-.rodape-coluna h5 {
-    color: #e0a030;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin: 0 0 16px 0;
-}
-
-.rodape-coluna ul {
-    list-style: none;
+.rodape p {
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.rodape-coluna a {
-    font-size: 13.5px;
-}
-
-.rodape-coluna a:hover {
-    color: #fff;
-}
-
-.rodape-base {
-    max-width: 1200px;
-    margin: 0 auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.rodape-base p {
-    margin: 0;
-    font-size: 12px;
-    color: #8a8fa0;
+    font-size: 13px;
 }
 
 /* itens que o JavaScript liga e desliga */
