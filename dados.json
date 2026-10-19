@@ -27,6 +27,13 @@
   ],
   "comunicados": [
     {
+      "data": "05 nov 2025",
+      "titulo": "Teste",
+      "texto": "teste",
+      "imagem": "https://samplelib.com/jpeg/sample-photo-3840x2160.jpg",
+      "destaque": true
+    },
+    {
       "id": "com-1",
       "data": "05 NOV. 2026",
       "titulo": "Nova Campanha de Jejum e Oração",

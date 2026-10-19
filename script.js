@@ -305,16 +305,52 @@ function mostrarAnoRodape() {
 
 // ============================================================
 // 4. FORMULÁRIO DE CONTATO
+// Confere os campos e abre o WhatsApp da igreja com a mensagem já escrita.
+// Um site não consegue enviar a mensagem sozinho: a pessoa só precisa apertar
+// "enviar" dentro do WhatsApp.
 // ============================================================
 
-// Confere os campos e, se estiver tudo certo, envia a mensagem para o Formspree
-// (que encaminha para o e-mail da igreja).
-async function enviarContato(evento) {
+// Número do WhatsApp da igreja: código do país (55) + DDD + número, só com dígitos.
+const whatsappDaIgreja = '5561981073983';
+
+// Mensagens muito grandes não cabem no endereço do WhatsApp.
+const maximoDeCaracteres = 1000;
+
+// Acha o espaço onde aparece o aviso de um campo ("erro-nome" para o campo "nome").
+// Se não existir no HTML, cria logo depois do campo.
+function pegarErroDoCampo(idDoCampo) {
+    let erro = document.getElementById('erro-' + idDoCampo);
+
+    if (erro === null) {
+        erro = document.createElement('p');
+        erro.id = 'erro-' + idDoCampo;
+        erro.className = 'form-erro';
+        document.getElementById(idDoCampo).insertAdjacentElement('afterend', erro);
+    }
+
+    return erro;
+}
+
+// Acha o parágrafo de status no fim do formulário. Se não existir no HTML, cria.
+function pegarStatusDoContato(formulario) {
+    let status = document.getElementById('contato-status');
+
+    if (status === null) {
+        status = document.createElement('p');
+        status.id = 'contato-status';
+        status.className = 'form-status';
+        formulario.appendChild(status);
+    }
+
+    return status;
+}
+
+// Clique em "Enviar Mensagem": confere os campos e abre o WhatsApp.
+function enviarContato(evento) {
     evento.preventDefault();  // impede a página de recarregar
 
-    const formulario = document.getElementById('form-contato');
-    const status = document.getElementById('contato-status');
-    const botao = document.getElementById('btn-enviar-contato');
+    const formulario = evento.currentTarget;  // o formulário que foi enviado
+    const status = pegarStatusDoContato(formulario);
 
     const nome = document.getElementById('nome').value.trim();
     const email = document.getElementById('email').value.trim();
@@ -323,48 +359,44 @@ async function enviarContato(evento) {
     // texto vazio ('') = campo certo. Texto com aviso = campo errado.
     const erroNome = nome.length < 3 ? 'Digite seu nome completo.' : '';
     const erroEmail = /\S+@\S+\.\S+/.test(email) ? '' : 'Digite um e-mail válido.';  // formato algo@algo.algo
-    const erroMensagem = mensagem.length < 10 ? 'Escreva pelo menos 10 caracteres.' : '';
 
-    document.getElementById('erro-nome').textContent = erroNome;
-    document.getElementById('erro-email').textContent = erroEmail;
-    document.getElementById('erro-mensagem').textContent = erroMensagem;
+    let erroMensagem = '';
+    if (mensagem.length < 10) {
+        erroMensagem = 'Escreva pelo menos 10 caracteres.';
+    } else if (mensagem.length > maximoDeCaracteres) {
+        erroMensagem = 'Mensagem muito longa. Use no máximo ' + maximoDeCaracteres + ' caracteres.';
+    }
+
+    pegarErroDoCampo('nome').textContent = erroNome;
+    pegarErroDoCampo('email').textContent = erroEmail;
+    pegarErroDoCampo('mensagem').textContent = erroMensagem;
 
     if (erroNome || erroEmail || erroMensagem) {
+        status.textContent = '';
         return;  // tem campo errado: para aqui
     }
 
-    if (formulario.action.includes('SEU_ID_AQUI')) {
-        status.className = 'form-status form-status-erro';
-        status.textContent = 'Falta configurar o Formspree no index.html (veja o LEIA-ME).';
-        return;
-    }
+    // o texto que vai aparecer pronto dentro do WhatsApp
+    const texto = '*Mensagem pelo site da igreja*\n\n'
+        + 'Nome: ' + nome + '\n'
+        + 'E-mail: ' + email + '\n\n'
+        + mensagem;
 
-    status.className = 'form-status';
-    status.textContent = 'Enviando...';
-    botao.disabled = true;  // evita clicar duas vezes
+    // encodeURIComponent transforma espaços, acentos, quebras de linha e & # em códigos seguros para o endereço
+    const endereco = 'https://wa.me/' + whatsappDaIgreja + '?text=' + encodeURIComponent(texto);
 
-    let enviou = false;
-    try {
-        const resposta = await fetch(formulario.action, {
-            method: 'POST',
-            body: new FormData(formulario),
-            headers: { Accept: 'application/json' },
-        });
-        enviou = resposta.ok;
-    } catch (erro) {
-        enviou = false;  // sem internet, por exemplo
-    }
+    const janela = window.open(endereco, '_blank');  // abre o WhatsApp em outra aba
 
-    botao.disabled = false;
+    status.className = 'form-status form-status-ok';
 
-    if (enviou) {
-        status.className = 'form-status form-status-ok';
-        status.textContent = 'Mensagem enviada! Em breve entraremos em contato.';
-        formulario.reset();
+    if (janela === null) {
+        // o navegador bloqueou a nova aba: oferece um link para a pessoa clicar
+        status.innerHTML = '<a href="' + endereco + '" target="_blank">Clique aqui para abrir o WhatsApp com a sua mensagem</a>';
     } else {
-        status.className = 'form-status form-status-erro';
-        status.textContent = 'Não conseguimos enviar agora. Tente novamente.';
+        status.textContent = 'Abrimos o WhatsApp com a sua mensagem pronta. É só apertar enviar lá.';
     }
+
+    formulario.reset();
 }
 
 
